@@ -14,6 +14,7 @@
 <body>
 
   <%-include('./partials/navbar.ejs')%>
+  <%- include('./partials/loggedInAs.ejs', {username: username}) %>
     <div class="container">
       <h2 class="p-3 text-center">Choose a room</h2>
       <hr>
@@ -27,10 +28,16 @@
           </div>
           <% }); %>
       </div>
+      <% if ( isAdmin ) { %>
+        <div class="text-center mt-3">
+          <button onclick="addRoom('/rooms/' )" class="btn btn-success">Add a new room</button>
+        </div>
+      <% }; %>
     </div>
     <hr>
     <%-include('./partials/footer.ejs')%>
       <script src="../javascripts/makeReservation.js"></script>
+      <script src="../javascripts/addRoom.js"></script>
 
 </body>
 

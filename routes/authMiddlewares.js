@@ -8,6 +8,16 @@ module.exports = {
             next();
     },
 
+    isAdmin: function(req, res, next) {
+      if(req.user.role === "Admin") {
+          next();
+          return;
+      }
+      else {
+          res.status(401).send(new Error());
+      }
+  },
+
     //Middleware to check if the user is an admin
     canSeeUserDetails: function(req, res, next) {
     if (req.user != null)

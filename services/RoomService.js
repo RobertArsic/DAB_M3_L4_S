@@ -57,13 +57,13 @@ class RoomService {
 
     //Rent a specified room using raw SQL
     async rentARoom(userId, roomId, startDate, endDate) {
-        sequelize.query('INSERT INTO reservations (StartDate, EndDate, RoomId, UserId) VALUES (:StartDate, :EndDate, :RoomId, :UserId)', {
+        sequelize.query('CALL insert_reservation (:UserId, :RoomId, :StartDate, :EndDate)', {
             replacements:
             {
-                StartDate: startDate,
-                EndDate: endDate,
                 RoomId: roomId,
-                UserId: userId
+                UserId: userId,
+                StartDate: startDate,
+                EndDate: endDate
             }
         }).then(result => {
             return result

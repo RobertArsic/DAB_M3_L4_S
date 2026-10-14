@@ -25,15 +25,20 @@
                   <%=hotel.Location%>
                 </span>
             </span>
-            <a href="/rooms/<%=hotel.id%>" class="col btn btn-success me-1"> Rent a room</a>
-            <a href="/hotels/<%=hotel.id%>" class="col btn btn-warning me-1"> Details</a>
-          </div>
+            <% if (user != null) { %>}
+              <a href="/rooms/<%=hotel.id%>" class="col btn btn-success me-1"> Rent a room</a>
+            <% }; %>
+              <a href="/hotels/<%=hotel.id%>" class="col btn btn-warning me-1"> Details</a>
+              <button onclick="deleteHotel('/hotels/', '<%=hotel.id%>')" class="col btn btn-secondary">Delete</button>
+            </div>
           <% }); %>
       </div>
+      <button onclick="addHotel('/hotels/' )" class="btn btn-success">Add a new hotel</button>
     </div>
     <hr>
+    <script src="/javascripts/addHotel.js"></script>
+    <script src="/javascripts/deleteHotel.js"></script>
     <%-include('./partials/footer.ejs')%>
-
 </body>
 
 </html>

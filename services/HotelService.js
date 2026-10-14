@@ -29,7 +29,7 @@ class HotelService {
     }
 
     //Get hotel details using raw SQL	
-    async getHotelDetails(hotelId) {
+    async getHotelDetails(hotelId, userId) {
         //Retrive hotel data
         const hotel = await sequelize.query('SELECT h.id, h.Name, h.Location, ROUND(AVG(r.Value), 1) AS AvgRate FROM hotels h LEFT JOIN rates r ON h.id = r.HotelId WHERE h.id = :hotelId', {
             replacements:
@@ -44,7 +44,7 @@ class HotelService {
             replacements:
             {
                 hotelId: hotelId,
-                userId: 1
+                userId: userId
             },
             type: QueryTypes.SELECT,
         });

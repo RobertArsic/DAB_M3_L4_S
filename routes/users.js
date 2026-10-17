@@ -1,13 +1,31 @@
 var express = require('express');
+var createError = require('http-errors');
 var router = express.Router();
 var db = require("../models");
 var UserService = require("../services/UserService")
 var userService = new UserService(db);
-var { canSeeUserDetails } = require("./authMiddlewares");
+var { canSeeUserDetails, canSeeUserList, checkIfAuthorized, isAdmin } = require("./authMiddlewares");
+var bodyParser = require('body-parser');
+var jsonParser = bodyParser.json()
 
 router.get('/:userId', canSeeUserDetails, async function(req, res, next) {
   const user = await userService.getOne(req.params.userId);
+  if (user === null) {
+    next(createError(404, 'User not found'));
+    return;
+  }
   res.render('userDetails', {user: user});
+});
+
+router.get('/', canSeeUserList, async function(req, res, next) {
+  const users = await userService.getAll();
+  res.render('users', {users: users});
+});
+
+router.delete('/', checkIfAuthorized, isAdmin, jsonParser, async function(req, res, next) {
+  let id = req.body.id;
+  await userService.deleteUser(id);
+  res.end()
 });
 
 module.exports = router;

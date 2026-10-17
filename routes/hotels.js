@@ -1,4 +1,5 @@
 var express = require('express');
+var createError = require('http-errors');
 var router = express.Router();
 var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
@@ -17,6 +18,10 @@ router.get('/:hotelId', async function(req, res, next) {
   const username = req.user?.username ?? 0;
   const hotel = await hotelService.getHotelDetails(req.params.hotelId, userId);
   console.log(hotel);
+    if (hotel === null) {
+      next(createError(404, 'Hotel not found'));
+      return;
+    }
   res.render('hotelDetails', { hotel: hotel, userId: userId, user: req.user, username: username });
 });
 

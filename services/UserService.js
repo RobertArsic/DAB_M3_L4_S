@@ -1,3 +1,5 @@
+const { Op } = require("sequelize");
+
 class UserService {
     constructor(db) {
         this.client = db.sequelize;
@@ -16,13 +18,17 @@ class UserService {
                 Salt: salt,
                 EncryptedPassword: encryptedPassword
             }
-        ) 
+        ).catch(function (err) {
+            console.log(err);
+        });
     }
 
     async getAll() {
         return this.User.findAll({
             where: {}
-        })
+        }).catch(function (err) {
+            console.log(err);
+        });
     }
     
     async getOne(userId) {        
@@ -37,6 +43,8 @@ class UserService {
                     model: this.Hotel
                 }            
             }
+        }).catch(function (err) {
+            console.log(err);
         });
     }
     async getOneByName(username) {        
@@ -51,13 +59,22 @@ class UserService {
                     model: this.Hotel
                 }            
             }
+        }).catch(function (err) {
+            console.log(err);
         });
     }
 
     async deleteUser(userId) {
         return this.User.destroy({
-            where: {id: userId}
-        })
+            where: {
+                id: userId,
+                Role: {
+                    [Op.not]: 'Admin'
+                }
+            }
+        }).catch(function (err) {
+            console.log(err);
+        });
     }
 }
 module.exports = UserService;

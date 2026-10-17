@@ -30,17 +30,13 @@
               <a href="/rooms/<%=hotel.id%>" class="col btn btn-success me-1"> Rent a room</a>
             <% }; %>
               <a href="/hotels/<%=hotel.id%>" class="col btn btn-warning me-1"> Details</a>
-              <% if ( isAdmin ) { %>
                 <button onclick="deleteHotel('/hotels/', '<%=hotel.id%>')" class="col btn btn-secondary">Delete</button>
-              <% }; %>
               </div>
           <% }); %>
       </div>
-      <% if ( isAdmin ) { %>
         <div class="text-center mt-3">
           <button onclick="addHotel('/hotels/' )" class="btn btn-success">Add a new hotel</button>
         </div>
-      <% }; %>
     </div>
     <hr>
     <script src="/javascripts/addHotel.js"></script>

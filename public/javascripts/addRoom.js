@@ -2,6 +2,8 @@ async function addRoom(url) {
     let hotelId = parseInt(prompt("Provide the hotel ID for the new room"))
     let capacity = parseInt(prompt("Provide the new room's capacity"))
     let pricePerDay = parseFloat(prompt("Provide the new room's price per day"))
+    if (hotelId === null || capacity === null || pricePerDay === null)
+        return;
     await fetch(url, {
         method: 'POST',
         headers: {

@@ -1,5 +1,9 @@
 async function makeRate(userId, url) {
-    let value = prompt("Rate the hotel from 1 to 5")
+    let value = parseInt(prompt("Rate the hotel from 1 to 5"));
+        if (value === null)
+            return;
+        if (value < 1 || value >5)
+            return;
         await fetch(url, {
             method: 'POST',
             headers: {

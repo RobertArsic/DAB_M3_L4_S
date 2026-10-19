@@ -10,14 +10,14 @@ var { checkIfAuthorized, isAdmin } = require("./authMiddlewares");
 router.get('/:hotelId', async function(req, res, next) {
   const rooms =  await roomService.getHotelRooms(req.params.hotelId);
   const userId = req.user?.id ?? 0;
-  const isAdmin = req.user.role === "Admin";
+  const isAdmin = req.user?.role === "Admin";
   res.render('rooms', { rooms: rooms, userId: userId, username: req.user?.username, isAdmin: isAdmin });
 });
 
 router.get('/', async function(req, res, next) {
     const rooms = await roomService.get();
     const userId = req.user?.id ?? 0;
-    const isAdmin = req.user.role === "Admin";
+    const isAdmin = req.user?.role === "Admin";
     res.render('rooms', { rooms: rooms, userId: userId, username: req.user?.username, isAdmin: isAdmin });
 });
 

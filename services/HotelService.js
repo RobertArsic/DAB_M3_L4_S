@@ -3,6 +3,9 @@ const { QueryTypes } = require('sequelize');
 class HotelService {
     constructor(db) {
         this.client = db.sequelize;
+        this.Hotel = db.Hotel;
+        this.User = db.User;
+        this.Rate = db.Rate;
     }
 
     //Create a hotel using raw SQL
@@ -46,7 +49,7 @@ class HotelService {
 
     //Retrive user rating count
     if (hotel !== null) {
-        hotel.avg = hotel.Users.map(x => x.Rate.dataVales.Value)
+        hotel.avg = hotel.Users.map(x => x.Rate.dataValues.value)
         .reduce((a, b) => a + b, 0) / hotel.Users.length;
         hotel.rated = hotel.Users.filter(x => x.dataValues.id == userId)
         .length > 0;
@@ -74,6 +77,14 @@ class HotelService {
         ).catch(function (err) {
             console.log(err);
         })
+    }
+
+    async getBestRate() {
+        return this.Rate.findOne({
+            order: [
+                ['value', 'DESC']
+            ],
+        });
     }
 }
 module.exports = HotelService;

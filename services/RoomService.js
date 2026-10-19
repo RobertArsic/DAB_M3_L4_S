@@ -3,6 +3,10 @@ const { QueryTypes } = require('sequelize');
 class RoomService {
     constructor(db) {
         this.client = db.sequelize;
+        this.Room = db.Room;
+        this.User = db.User;
+        this.Hotel = db.Hotel;
+        this.Reservation = db.Reservation;
     }
 
     //Create a room using raw SQL
